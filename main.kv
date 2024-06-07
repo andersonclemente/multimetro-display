@@ -1,0 +1,28 @@
+<MenuScreen>:
+  BoxLayout:
+    orientation: 'vertical'
+    BoxLayout:
+      Button:
+        text: 'V'
+        font_size: 100
+        on_press: root.manager.current = 'voltimetro'
+      Button:
+        text: 'Ω'
+        font_size: 100
+        on_press: root.manager.current = 'ohmimetro'
+<Voltimetro>:
+  BoxLayout:
+    Label:
+      text: root.tensao
+      font_size: 50
+    Button:
+      text: 'Back to menu'
+      on_press: root.manager.current = 'menu'
+<Ohmimetro>:
+  BoxLayout:
+    Label:
+      text: root.resistencia
+      font_size: 50
+    Button:
+      text: 'Back to menu'
+      on_press: root.manager.current = 'menu'
