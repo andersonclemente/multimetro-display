@@ -1,3 +1,4 @@
+#:import MeshLinePlot kivy_garden.graph.MeshLinePlot
 <MenuScreen>:
   BoxLayout:
     orientation: 'vertical'
@@ -10,10 +11,14 @@
         text: 'Ω'
         font_size: 100
         on_press: root.manager.current = 'ohmimetro'
+      Button:
+        text: 'A'
+        font_size: 100
+        on_press: root.manager.current = 'amperimetro'
 <Voltimetro>:
   BoxLayout:
     Label:
-      text: root.tensao
+      text: root.leitura
       font_size: 50
     Button:
       text: 'Back to menu'
@@ -21,8 +26,38 @@
 <Ohmimetro>:
   BoxLayout:
     Label:
-      text: root.resistencia
+      text: root.leitura
       font_size: 50
+    Button:
+      text: 'Back to menu'
+      on_press: root.manager.current = 'menu'
+<Amperimetro>:
+  BoxLayout:
+    BoxLayout:
+      padding: 50
+      orientation:'vertical'
+      Label:
+        text: root.leitura
+        font_size: 50
+      Graph:
+        id: graph_test
+        plot: MeshLinePlot
+        xlabel:'TEMPO'
+        ylabel:'CORRENTE'
+        x_ticks_minor:5
+        x_tics_major:25
+        y_ticks_major:1
+        y_grid_label:True
+        x_grid_label:True
+        padding:5
+        x_grid:True
+        y_grid:True
+        xmin:-0
+        xmax:100
+        ymin:-3.5
+        ymax:3.5
+        pos: 0, root.height / 6
+        size: root.width , root.height
     Button:
       text: 'Back to menu'
       on_press: root.manager.current = 'menu'
