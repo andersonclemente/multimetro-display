@@ -6,7 +6,10 @@ from math import sin
 import serial
 from kivy.clock import Clock
 import threading
-
+from kivy.config import Config
+Config.set('graphics', 'resizable', False)
+Config.set('graphics', 'width', '1400')
+Config.set('graphics', 'height', '700')
 resultados = ["0","0","100000000"]
 
 def ler_ultima_linha():
@@ -108,7 +111,7 @@ class Amperimetro(Screen):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        plot = MeshLinePlot(color=[1, 0, 1, 1])
+        plot = MeshLinePlot(color=[1, 0, 0, 1])
         plot.points = []
         self.plot = plot
         self.ids["graph_test"].add_plot(plot)
@@ -123,6 +126,7 @@ class MainApp(App):
         sm.add_widget(Voltimetro(name='voltimetro'))
         sm.add_widget(Ohmimetro(name='ohmimetro'))
         sm.add_widget(Amperimetro(name='amperimetro'))
+        self.title = "Multímetro"
         return sm
     
     def __init__(self, **kwargs):
