@@ -1,17 +1,26 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy_garden.graph import  MeshLinePlot
-from kivy.properties import StringProperty, ObjectProperty
+from kivy.properties import StringProperty
 from math import sin
 import serial
 from kivy.clock import Clock
 import threading
 from kivy.config import Config
+
+#define tamanho da janela do app e define como não redimencionável
 Config.set('graphics', 'resizable', False)
 Config.set('graphics', 'width', '1400')
 Config.set('graphics', 'height', '700')
+
+# variável global que armazena em uma lista valores do multímetro
+# corrente     posição 0
+# tensao       posição 1
+# resistencia  posição 2
 resultados = ["0","0","100000000"]
 
+
+#Função que vai se conectar com a porta serial e em loop ficara atualizando a lista de valores vindas do arduino
 def ler_ultima_linha():
     global ultima_linha
     try:
@@ -26,16 +35,22 @@ def ler_ultima_linha():
     except serial.SerialException as e:
         print(f"Erro ao acessar a porta serial: {e}")
 
+
+#define funcionamento na tela de Voltímetro
 class Voltimetro(Screen):
     leitura = StringProperty('0 V')
 
+    #define o que acontece quando entrar em tela de Voltímetro
     def on_enter(self):
         self.atualizarTensao()
 
+    #define o que acontece quando deixar em telade Voltímetro
     def on_leave(self):
         Clock.unschedule(self.atualizacao)
-        
+
+    #atualiza interface        
     def atualizarTensao(self, *args):
+        #define para chamar a propria função recursivamente em 0.3 segundos
         self.atualizacao = Clock.schedule_once(self.atualizarTensao, 0.3)
 
         global resultados
